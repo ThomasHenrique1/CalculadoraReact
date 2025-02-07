@@ -7,46 +7,58 @@ function App() {
   const [numeroUm, setNumeroUm] = useState("");
   const [simbolo, setSimbolo] = useState("");
   const [numeroDois, setNumeroDois] = useState("");
+  const [usarPorcentagem, setUsarPorcentagem] = useState(false);
+  const [usarResultado, setUsarResultado] = useState(false); // NOVO ESTADO
 
   function adicionarNumero(n) {
-    let num = numeroUm + n;
-    setNumeroUm(num);
+    if (usarResultado) {
+      setNumeroUm(n.toString());
+      setUsarResultado(false);
+    } else {
+      setNumeroUm(numeroUm + n);
+    }
   }
 
   function conta(sinal) {
-    if (numeroUm !== "" && numeroDois !== "") {
-      // Calcula o valor com base no símbolo
-      if (simbolo === "/") {
-        setNumeroDois(parseFloat(numeroDois) / parseFloat(numeroUm));
-      } else if (simbolo === "*") {
-        setNumeroDois(parseFloat(numeroDois) * parseFloat(numeroUm));
-      } else if (simbolo === "-") {
-        setNumeroDois(parseFloat(numeroDois) - parseFloat(numeroUm));
-      } else if (simbolo === "+") {
-        setNumeroDois(parseFloat(numeroDois) + parseFloat(numeroUm));
+    if (numeroUm !== "" || numeroDois !== "") {
+      if (numeroUm === "" && numeroDois !== "") {
+        setSimbolo(sinal); // Permite trocar de operador
+      } else {
+        let novoNumeroDois = usarResultado ? numeroDois : numeroUm;
+        setNumeroDois(novoNumeroDois);
+        setNumeroUm("");
+        setSimbolo(sinal);
+        setUsarPorcentagem(false);
+        setUsarResultado(false);
       }
-      setSimbolo(sinal);
-      setNumeroUm("");
-    } else {
-      setSimbolo(sinal);
-      setNumeroDois(numeroUm);
-      setNumeroUm("");
     }
   }
 
   function resultado() {
     if (numeroUm !== "" && numeroDois !== "" && simbolo !== "=") {
-      if (simbolo === "/") {
-        setNumeroDois(parseFloat(numeroDois) / parseFloat(numeroUm));
-      } else if (simbolo === "*") {
-        setNumeroDois(parseFloat(numeroDois) * parseFloat(numeroUm));
-      } else if (simbolo === "-") {
-        setNumeroDois(parseFloat(numeroDois) - parseFloat(numeroUm));
-      } else if (simbolo === "+") {
-        setNumeroDois(parseFloat(numeroDois) + parseFloat(numeroUm));
+      let num1 = parseFloat(numeroDois);
+      let num2 = parseFloat(numeroUm);
+
+      if (usarPorcentagem) {
+        num2 = (num1 * num2) / 100;
       }
-      setSimbolo("=");
+
+      let resultadoFinal;
+      if (simbolo === "/") {
+        resultadoFinal = num1 / num2;
+      } else if (simbolo === "*") {
+        resultadoFinal = num1 * num2;
+      } else if (simbolo === "-") {
+        resultadoFinal = num1 - num2;
+      } else if (simbolo === "+") {
+        resultadoFinal = num1 + num2;
+      }
+
+      setNumeroDois(resultadoFinal.toString());
       setNumeroUm("");
+      setSimbolo("=");
+      setUsarPorcentagem(false);
+      setUsarResultado(true); // Permite continuar a conta com o resultado
     }
   }
 
@@ -58,17 +70,13 @@ function App() {
     setNumeroUm("");
     setNumeroDois("");
     setSimbolo("");
+    setUsarPorcentagem(false);
+    setUsarResultado(false);
   }
 
   function porcentagem() {
-    if (numeroDois === "") {
-      // Quando não há numeroDois, fazemos a porcentagem de numeroUm
-      let p = parseFloat(numeroUm) / 100;
-      setNumeroUm(p.toString());
-    } else {
-      // Caso tenha numeroDois, aplicamos a porcentagem sobre numeroDois
-      let p = (parseFloat(numeroUm) / 100) * parseFloat(numeroDois);
-      setNumeroUm(p.toString());
+    if (numeroUm !== "") {
+      setUsarPorcentagem(true);
     }
   }
 
@@ -76,8 +84,7 @@ function App() {
     if (numeroUm === "") {
       setNumeroUm("0.");
     } else if (!numeroUm.includes(".")) {
-      let num = numeroUm + ".";
-      setNumeroUm(num);
+      setNumeroUm(numeroUm + ".");
     }
   }
 
@@ -87,7 +94,7 @@ function App() {
         <div className="calculadoraHeader">
           <p className="equacao">{numeroDois}</p>
           <p className="solucao">
-            {simbolo} {numeroUm}
+            {simbolo} {numeroUm} {usarPorcentagem ? "%" : ""}
           </p>
         </div>
         <div className="botoes">
