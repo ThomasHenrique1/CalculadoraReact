@@ -1,8 +1,38 @@
-# React + Vite
+<div align="center">
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Calculadora em React
 
-Currently, two official plugins are available:
+Este é um projeto de **calculadora simples** construída com **React**. A aplicação foi desenvolvida para demonstrar como criar uma calculadora funcional utilizando o **React.js**.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+![Calculadora](https://img.shields.io/badge/Calculadora-%E2%9C%94-success)
+
+
+<div align="Justify">
+
+## Descrição
+
+A **calculadora** foi criada para realizar as operações básicas de soma, subtração, multiplicação, divisão, e porcentagem. O design da aplicação é simples e intuitivo, proporcionando uma boa experiência de uso.
+
+A aplicação tem as seguintes funcionalidades:
+
+- **Soma** ( + )
+- **Subtração** ( - )
+- **Multiplicação** ( * )
+- **Divisão** ( / )
+- **Porcentagem** ( % )
+- **Limpar** (CE e C)
+- **Resultado** (=)
+
+
+
+<div align="center">
+
+## Tecnologias Utilizadas
+
+
+<img src="https://skillicons.dev/icons?i=vite,react,css" alt="Tecnologias Front-end" />
+
+</div><br>
+
+# Licença
+Este projeto é de código aberto e licenciado sob a MIT License.
