@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import './App.css';
-import { Botao } from './components/botao/botao';
+import { Botao } from "./components/botao/Botao"
 import { BotaoZero } from './components/botaoZero/botaoZero';
 
 function App() {
